@@ -17,7 +17,7 @@ class OCRProcessor:
 
     def __init__(self):
         # Initialize the LLM for structured extraction
-        self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
 
     def extract_items(self, image_path: str) -> list:
         """
