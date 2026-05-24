@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Agent | Smart Shopping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .loader { border-top-color: #10b981; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <nav class="bg-white border-b border-slate-200 py-4 px-8 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-emerald-600 p-2 rounded-lg">
+                    <i class="fas fa-shopping-basket text-white"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-slate-800">GroceryAgent<span class="text-emerald-600">.ai</span></h1>
+            </div>
+            <div id="recommendations-bar" class="hidden md:flex gap-4">
+                <!-- Recommendations will be injected here -->
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Search and OCR -->
+        <div class="lg:col-span-8 space-y-6">
+            
+            <!-- Search Card -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-search text-emerald-600"></i> What do you need?
+                </h2>
+                <div class="flex gap-2">
+                    <input type="text" id="query-input" list="search-suggestions" placeholder="Try 'Milk, eggs, and bread'..." 
+                        class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all"
+                        oninput="handleAutocomplete(this.value)">
+                    <datalist id="search-suggestions"></datalist>
+                    <button onclick="handleSearch()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                        Find Items
+                    </button>
+                </div>
+            </div>
+
+            <!-- OCR Card -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-camera text-emerald-600"></i> Scan List
+                </h2>
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-slate-400 mb-2"></i>
+                        <p class="text-sm text-slate-500">Upload a handwritten or printed list</p>
+                    </div>
+                    <input type="file" id="ocr-upload" class="hidden" onchange="handleUpload(this)">
+                </label>
+            </div>
+
+            <!-- Results Area -->
+            <div id="results-container" class="space-y-4">
+                <!-- Results dynamically injected here -->
+            </div>
+        </div>
+
+        <!-- Right Column: Basket -->
+        <div class="lg:col-span-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-24">
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                    <h2 class="font-bold text-lg">Your Basket</h2>
+                    <span id="basket-count" class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded-full">0 items</span>
+                </div>
+                
+                <div id="basket-items" class="p-4 max-h-[50vh] overflow-y-auto space-y-3">
+                    <!-- Basket items -->
+                    <p class="text-slate-400 text-center py-8">Your basket is empty</p>
+                </div>
+
+                <div class="p-6 bg-slate-50 rounded-b-2xl border-t border-slate-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-slate-500 font-medium">Estimated Total</span>
+                        <span id="total-price" class="text-2xl font-bold text-slate-900">$0.00</span>
+                    </div>
+                    <button class="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 rounded-xl font-bold transition-all transform active:scale-[0.98]">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Trigger recommendations on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchRecommendations();
+        });
+
+        async function handleAutocomplete(val) {
+            if (val.length < 2) return;
+            const res = await fetch(`/autocomplete?q=${encodeURIComponent(val)}`);
+            const suggestions = await res.json();
+            const list = document.getElementById('search-suggestions');
+            list.innerHTML = suggestions.map(s => `<option value="${s}">`).join('');
+        }
+
+        async function handleSearch() {
+            const query = document.getElementById('query-input').value;
+            if (!query) return;
+            
+            showLoading();
+            const res = await fetch('/search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({query})
+            });
+            const data = await res.json();
+            renderResults(data);
+            if (data.basket) updateBasket(data.basket, data.total);
+        }
+
+        async function handleUpload(input) {
+            if (!input.files.length) return;
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            showLoading("Scanning list...");
+            const res = await fetch('/upload', { method: 'POST', body: formData });
+            const data = await res.json();
+            
+            if (data.error) alert(data.error);
+            else {
+                updateBasket(data.basket, data.total);
+                renderOCRResults(data);
+            }
+        }
+
+        function renderOCRResults(data) {
+            const container = document.getElementById('results-container');
+            container.innerHTML = '';
+            
+            if (data.auto_added && data.auto_added.length > 0) {
+                const autoDiv = document.createElement('div');
+                autoDiv.className = 'p-4 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-100 mb-4';
+                autoDiv.innerHTML = `<p class="font-bold mb-2 text-sm"><i class="fas fa-magic"></i> Auto-added from history:</p>` + 
+                    data.auto_added.map(item => `<span class="inline-block bg-white px-2 py-1 rounded text-[10px] font-bold mr-2 mb-2 border border-emerald-200 uppercase">${item.suggested.brand} ${item.item}</span>`).join('');
+                container.appendChild(autoDiv);
+            }
+
+            if (data.manual && data.manual.length > 0) {
+                const title = document.createElement('h3');
+                title.className = 'text-xs font-bold text-slate-400 uppercase tracking-wider mb-3';
+                title.innerText = "Items needing brand selection:";
+                container.appendChild(title);
+                
+                data.manual.forEach(result => {
+                    container.appendChild(createItemCard(result));
+                });
+            }
+        }
+
+        function renderResults(data) {
+            const container = document.getElementById('results-container');
+            container.innerHTML = '';
+
+            if (data.type === 'resolved') {
+                container.appendChild(createItemCard(data.result));
+            } else if (data.type === 'multiple') {
+                container.innerHTML = `<div class="p-4 bg-amber-50 text-amber-800 rounded-lg">Multiple matches found for your search. Please be more specific.</div>`;
+            } else if (data.type === 'not_found') {
+                container.innerHTML = `<div class="p-4 bg-slate-100 text-slate-600 rounded-lg">We couldn't find "${data.query}" in our catalog.</div>`;
+            }
+        }
+
+        function createItemCard(result) {
+            const div = document.createElement('div');
+            div.className = 'bg-white p-6 rounded-2xl shadow-sm border border-slate-200 animate-in fade-in duration-300';
+            
+            const suggested = result.suggested;
+            // Escape single quotes for string arguments and double quotes for JSON in attributes
+            const suggestedData = suggested ? JSON.stringify(suggested).replace(/"/g, '&quot;') : null;
+            
+            div.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Suggested Match</span>
+                        <h3 class="text-xl font-bold text-slate-900 capitalize">${result.item}</h3>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        ${result.order_count > 0 ? `<span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded font-medium mb-1">Ordered ${result.order_count}x</span>` : ''}
+                        ${result.last_ordered ? `<span class="text-[10px] text-slate-400">Last: ${result.last_ordered}</span>` : ''}
+                    </div>
+                </div>
+                
+                ${suggested ? `
+                    <div class="flex items-center justify-between p-4 bg-emerald-50 rounded-xl border border-emerald-100 mb-4">
+                        <div>
+                            <p class="font-bold text-emerald-900">${suggested.brand}</p>
+                            <p class="text-sm text-emerald-700">${suggested.unit} • $${suggested.price.toFixed(2)}</p>
+                        </div>
+                        <button onclick="addToBasket(${suggestedData})" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Add to Basket</button>
+                    </div>
+                ` : `<p class="text-slate-500 mb-4 italic">No order history for this item.</p>`}
+
+                ${result.alternatives.length > 0 ? `
+                    <p class="text-xs font-bold text-slate-400 uppercase mb-2">Alternative Brands</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        ${result.alternatives.map(alt => {
+                            const altData = JSON.stringify(alt).replace(/"/g, '&quot;');
+                            return `
+                            <div class="flex items-center justify-between p-3 border border-slate-100 rounded-lg hover:border-emerald-200 transition-colors">
+                                <div>
+                                    <p class="text-sm font-semibold">${alt.brand}</p>
+                                    <p class="text-xs text-slate-500">$${alt.price.toFixed(2)}</p>
+                                </div>
+                                <button onclick="addToBasket(${altData})" class="text-emerald-600 hover:text-emerald-700 px-2 py-1">
+                                    <i class="fas fa-plus-circle text-lg"></i>
+                                </button>
+                            </div>
+                        `}).join('')}
+                    </div>
+                ` : ''}
+            `;
+            return div;
+        }
+
+        async function addToBasket(item) {
+            const res = await fetch('/basket/add', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(item)
+            });
+            const data = await res.json();
+            updateBasket(data.basket, data.total);
+        }
+
+        async function updateQuantity(name, brand, delta) {
+            const res = await fetch('/basket/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, brand, delta})
+            });
+            const data = await res.json();
+            updateBasket(data.basket, data.total);
+        }
+
+        async function removeFromBasket(name, brand) {
+            const res = await fetch('/basket/remove', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, brand})
+            });
+            const data = await res.json();
+            updateBasket(data.basket, data.total);
+        }
+
+        function updateBasket(items, total) {
+            const container = document.getElementById('basket-items');
+            const countLabel = document.getElementById('basket-count');
+            const totalLabel = document.getElementById('total-price');
+            
+            countLabel.innerText = `${items.length} items`;
+            totalLabel.innerText = `$${total.toFixed(2)}`;
+            
+            if (items.length === 0) {
+                container.innerHTML = `<p class="text-slate-400 text-center py-8">Your basket is empty</p>`;
+                return;
+            }
+
+            container.innerHTML = items.map(item => {
+                // Escape single quotes for JavaScript string literals
+                const escName = item.name.replace(/'/g, "\\'");
+                const escBrand = item.brand.replace(/'/g, "\\'");
+                
+                return `
+                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-100 group">
+                    <div class="flex items-center gap-3">
+                        <div class="flex flex-col items-center bg-slate-50 rounded-lg p-1">
+                            <button onclick="updateQuantity('${escName}', '${escBrand}', 1)" class="text-xs text-slate-400 hover:text-emerald-600">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <span class="text-sm font-bold text-slate-700 w-6 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity('${escName}', '${escBrand}', -1)" class="text-xs text-slate-400 hover:text-red-500">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">${item.name}</p>
+                            <p class="text-xs text-slate-500">${item.brand}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <p class="font-bold text-sm">$${(item.price * item.quantity).toFixed(2)}</p>
+                        <button onclick="removeFromBasket('${escName}', '${escBrand}')" class="text-slate-300 hover:text-red-500 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function showLoading(msg = "Searching...") {
+            const container = document.getElementById('results-container');
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-12">
+                    <div class="loader ease-linear rounded-full border-4 border-t-4 border-slate-200 h-12 w-12 mb-4"></div>
+                    <p class="text-slate-500 font-medium">${msg}</p>
+                </div>
+            `;
+        }
+
+        async function fetchRecommendations() {
+            const res = await fetch('/recommendations');
+            const items = await res.json();
+            const bar = document.getElementById('recommendations-bar');
+            
+            if (items.length > 0) {
+                bar.classList.remove('hidden');
+                bar.innerHTML = '<span class="text-xs font-bold text-slate-400 self-center mr-2">SUGGESTED:</span>' + 
+                    items.map(item => `
+                        <button onclick='addToBasket(${JSON.stringify(item)})' 
+                            class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-100 hover:bg-emerald-100 transition-colors">
+                            + ${item.name} (${item.brand})
+                        </button>
+                    `).join('');
+            }
+        }
+
+    </script>
+</body>
+</html>

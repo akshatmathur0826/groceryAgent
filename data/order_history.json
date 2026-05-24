@@ -1,0 +1,138 @@
+[
+  {
+    "date": "2025-03-01",
+    "items": [
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 },
+      { "name": "bread", "brand": "Dave's Killer Bread", "quantity": 1, "unit": "21 Whole Grains", "price": 5.49 },
+      { "name": "coffee", "brand": "Starbucks", "quantity": 1, "unit": "12oz Bag", "price": 9.99 }
+    ]
+  },
+  {
+    "date": "2025-03-08",
+    "items": [
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 },
+      { "name": "eggs", "brand": "Vital Farms", "quantity": 1, "unit": "12pk", "price": 7.99 }
+    ]
+  },
+  {
+    "date": "2025-03-15",
+    "items": [
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 },
+      { "name": "coffee", "brand": "Starbucks", "quantity": 1, "unit": "12oz Bag", "price": 9.99 },
+      { "name": "butter", "brand": "Kerrygold", "quantity": 1, "unit": "8oz", "price": 4.99 }
+    ]
+  },
+  {
+    "date": "2025-03-22",
+    "items": [
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 },
+      { "name": "bread", "brand": "Dave's Killer Bread", "quantity": 1, "unit": "21 Whole Grains", "price": 5.49 }
+    ]
+  }
+  ,
+  {
+    "date": "2025-01-15",
+    "items": [
+      { "name": "detergent", "brand": "Tide", "quantity": 1, "unit": "92oz", "price": 12.99 },
+      { "name": "paper towels", "brand": "Bounty", "quantity": 1, "unit": "6ct", "price": 14.99 },
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 }
+    ]
+  },
+  {
+    "date": "2025-02-01",
+    "items": [
+      { "name": "yogurt", "brand": "Chobani", "quantity": 4, "unit": "5.3oz", "price": 1.50 },
+      { "name": "bananas", "brand": "Chiquita", "quantity": 1, "unit": "Bunch", "price": 1.99 },
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 }
+    ]
+  },
+  {
+    "date": "2025-02-15",
+    "items": [
+      { "name": "chips", "brand": "Lay's", "quantity": 2, "unit": "Classic 8oz", "price": 3.50 },
+      { "name": "frozen pizza", "brand": "Digiorno", "quantity": 1, "unit": "Pepperoni", "price": 7.99 },
+      { "name": "orange juice", "brand": "Simply Orange", "quantity": 1, "unit": "52oz", "price": 4.75 }
+    ]
+  },
+  {
+    "date": "2025-03-05",
+    "items": [
+      { "name": "yogurt", "brand": "Chobani", "quantity": 4, "unit": "5.3oz", "price": 1.50 },
+      { "name": "chicken", "brand": "Store Brand", "quantity": 2, "unit": "1lb Breast", "price": 4.99 },
+      { "name": "onions", "brand": "Yellow Onions", "quantity": 1, "unit": "3lb Bag", "price": 2.99 }
+    ]
+  },
+  {
+    "date": "2025-03-18",
+    "items": [
+      { "name": "milk", "brand": "Organic Valley", "quantity": 1, "unit": "1 Gallon", "price": 5.99 },
+      { "name": "cheese", "brand": "Tillamook", "quantity": 1, "unit": "8oz Cheddar", "price": 4.99 },
+      { "name": "yogurt", "brand": "Chobani", "quantity": 4, "unit": "5.3oz", "price": 1.50 }
+    ]
+  },
+  {
+    "date": "2024-12-01",
+    "items": [
+      { "name": "dog food", "brand": "Blue Buffalo", "quantity": 1, "unit": "5lb Bag", "price": 18.99 },
+      { "name": "rice", "brand": "Mahatma", "quantity": 1, "unit": "2lb Bag", "price": 3.49 },
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 }
+    ]
+  },
+  {
+    "date": "2024-12-08",
+    "items": [
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 },
+      { "name": "spinach", "brand": "Dole", "quantity": 1, "unit": "8oz Bag", "price": 3.50 },
+      { "name": "chicken", "brand": "Tyson", "quantity": 1, "unit": "1lb Breast", "price": 5.99 }
+    ]
+  },
+  {
+    "date": "2024-12-15",
+    "items": [
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 },
+      { "name": "cereal", "brand": "Cheerios", "quantity": 1, "unit": "12oz Box", "price": 4.50 }
+    ]
+  },
+  {
+    "date": "2024-12-22",
+    "items": [
+      { "name": "dog food", "brand": "Blue Buffalo", "quantity": 1, "unit": "5lb Bag", "price": 18.99 },
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 },
+      { "name": "salmon", "brand": "Wild Caught", "quantity": 1, "unit": "1lb Fillet", "price": 14.99 }
+    ]
+  },
+  {
+    "date": "2025-01-05",
+    "items": [
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 },
+      { "name": "rice", "brand": "Mahatma", "quantity": 1, "unit": "2lb Bag", "price": 3.49 }
+    ]
+  },
+  {
+    "date": "2025-01-12",
+    "items": [
+      { "name": "dog food", "brand": "Blue Buffalo", "quantity": 1, "unit": "5lb Bag", "price": 18.99 },
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 }
+    ]
+  },
+  {
+    "date": "2025-01-19",
+    "items": [
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 },
+      { "name": "spinach", "brand": "Dole", "quantity": 1, "unit": "8oz Bag", "price": 3.50 }
+    ]
+  },
+  {
+    "date": "2025-02-02",
+    "items": [
+      { "name": "dog food", "brand": "Blue Buffalo", "quantity": 1, "unit": "5lb Bag", "price": 18.99 },
+      { "name": "rice", "brand": "Mahatma", "quantity": 1, "unit": "2lb Bag", "price": 3.49 }
+    ]
+  },
+  {
+    "date": "2025-03-29",
+    "items": [
+      { "name": "almond milk", "brand": "Silk", "quantity": 1, "unit": "64oz", "price": 4.29 }
+    ]
+  }
+]

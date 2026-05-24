@@ -1,0 +1,111 @@
+{
+  "milk": [
+    { "brand": "Organic Valley", "unit": "1 Gallon", "price": 5.99, "category": "Dairy" },
+    { "brand": "Horizon Organic", "unit": "1 Gallon", "price": 6.49, "category": "Dairy" },
+    { "brand": "Store Brand", "unit": "1 Gallon", "price": 3.29, "category": "Dairy" }
+  ],
+  "eggs": [
+    { "brand": "Vital Farms", "unit": "12pk", "price": 7.99, "category": "Dairy" },
+    { "brand": "Eggland's Best", "unit": "12pk", "price": 4.50, "category": "Dairy" },
+    { "brand": "Store Brand", "unit": "12pk", "price": 2.99, "category": "Dairy" }
+  ],
+  "bread": [
+    { "brand": "Dave's Killer Bread", "unit": "21 Whole Grains", "price": 5.49, "category": "Bakery" },
+    { "brand": "Nature's Own", "unit": "Honey Wheat", "price": 3.80, "category": "Bakery" },
+    { "brand": "Wonder Bread", "unit": "White", "price": 2.50, "category": "Bakery" }
+  ],
+  "butter": [
+    { "brand": "Kerrygold", "unit": "8oz", "price": 4.99, "category": "Dairy" },
+    { "brand": "Land O'Lakes", "unit": "16oz", "price": 5.20, "category": "Dairy" },
+    { "brand": "Store Brand", "unit": "16oz", "price": 3.99, "category": "Dairy" }
+  ],
+  "coffee": [
+    { "brand": "Starbucks", "unit": "12oz Bag", "price": 9.99, "category": "Pantry" },
+    { "brand": "Peet's Coffee", "unit": "12oz Bag", "price": 10.49, "category": "Pantry" },
+    { "brand": "Folgers", "unit": "30oz Can", "price": 12.00, "category": "Pantry" }
+  ],
+  "apples": [
+    { "brand": "Honeycrisp", "unit": "3lb Bag", "price": 6.99, "category": "Produce" },
+    { "brand": "Gala", "unit": "3lb Bag", "price": 4.50, "category": "Produce" }
+  ],
+  "pasta": [
+    { "brand": "Barilla", "unit": "16oz", "price": 1.89, "category": "Pantry" },
+    { "brand": "De Cecco", "unit": "16oz", "price": 2.99, "category": "Pantry" }
+  ],
+  "bananas": [
+    { "brand": "Chiquita", "unit": "Bunch", "price": 1.99, "category": "Produce" },
+    { "brand": "Organic", "unit": "Bunch", "price": 2.49, "category": "Produce" }
+  ],
+  "chicken": [
+    { "brand": "Tyson", "unit": "1lb Breast", "price": 5.99, "category": "Meat" },
+    { "brand": "Perdue", "unit": "1lb Breast", "price": 6.49, "category": "Meat" },
+    { "brand": "Store Brand", "unit": "1lb Breast", "price": 4.99, "category": "Meat" }
+  ],
+  "yogurt": [
+    { "brand": "Chobani", "unit": "5.3oz", "price": 1.50, "category": "Dairy" },
+    { "brand": "Fage", "unit": "5.3oz", "price": 1.75, "category": "Dairy" },
+    { "brand": "Siggi's", "unit": "5.3oz", "price": 1.89, "category": "Dairy" }
+  ],
+  "frozen pizza": [
+    { "brand": "Digiorno", "unit": "Pepperoni", "price": 7.99, "category": "Frozen" },
+    { "brand": "Amy's Kitchen", "unit": "Cheese", "price": 8.50, "category": "Frozen" },
+    { "brand": "Red Baron", "unit": "Classic", "price": 5.00, "category": "Frozen" }
+  ],
+  "chips": [
+    { "brand": "Lay's", "unit": "Classic 8oz", "price": 3.50, "category": "Snacks" },
+    { "brand": "Doritos", "unit": "Nacho Cheese", "price": 3.99, "category": "Snacks" },
+    { "brand": "Kettle Brand", "unit": "Sea Salt", "price": 4.29, "category": "Snacks" }
+  ],
+  "orange juice": [
+    { "brand": "Tropicana", "unit": "52oz", "price": 4.50, "category": "Beverages" },
+    { "brand": "Simply Orange", "unit": "52oz", "price": 4.75, "category": "Beverages" },
+    { "brand": "Store Brand", "unit": "52oz", "price": 3.25, "category": "Beverages" }
+  ],
+  "paper towels": [
+    { "brand": "Bounty", "unit": "6ct", "price": 14.99, "category": "Household" },
+    { "brand": "Viva", "unit": "6ct", "price": 12.50, "category": "Household" },
+    { "brand": "Scott", "unit": "6ct", "price": 9.99, "category": "Household" }
+  ],
+  "detergent": [
+    { "brand": "Tide", "unit": "92oz", "price": 12.99, "category": "Household" },
+    { "brand": "Persil", "unit": "100oz", "price": 13.50, "category": "Household" },
+    { "brand": "Seventh Generation", "unit": "90oz", "price": 11.99, "category": "Household" }
+  ],
+  "onions": [
+    { "brand": "Yellow Onions", "unit": "3lb Bag", "price": 2.99, "category": "Produce" },
+    { "brand": "Red Onions", "unit": "2lb Bag", "price": 3.49, "category": "Produce" }
+  ],
+  "cheese": [
+    { "brand": "Tillamook", "unit": "8oz Cheddar", "price": 4.99, "category": "Dairy" },
+    { "brand": "Sargento", "unit": "8oz Sliced", "price": 3.50, "category": "Dairy" },
+    { "brand": "Store Brand", "unit": "16oz Shredded", "price": 5.50, "category": "Dairy" }
+  ],
+  "rice": [
+    { "brand": "Mahatma", "unit": "2lb Bag", "price": 3.49, "category": "Pantry" },
+    { "brand": "Lundberg", "unit": "2lb Organic", "price": 5.99, "category": "Pantry" },
+    { "brand": "Store Brand", "unit": "5lb Bag", "price": 4.29, "category": "Pantry" }
+  ],
+  "salmon": [
+    { "brand": "Wild Caught", "unit": "1lb Fillet", "price": 14.99, "category": "Meat" },
+    { "brand": "Atlantic", "unit": "1lb Fillet", "price": 10.99, "category": "Meat" }
+  ],
+  "spinach": [
+    { "brand": "Dole", "unit": "8oz Bag", "price": 3.50, "category": "Produce" },
+    { "brand": "Taylor Farms", "unit": "1lb Organic", "price": 5.99, "category": "Produce" }
+  ],
+  "cereal": [
+    { "brand": "Cheerios", "unit": "12oz Box", "price": 4.50, "category": "Pantry" },
+    { "brand": "Special K", "unit": "11oz Box", "price": 4.99, "category": "Pantry" },
+    { "brand": "Store Brand", "unit": "18oz Box", "price": 3.29, "category": "Pantry" }
+  ],
+  "dog food": [
+    { "brand": "Blue Buffalo", "unit": "5lb Bag", "price": 18.99, "category": "Pets" },
+    { "brand": "Purina One", "unit": "5lb Bag", "price": 14.50, "category": "Pets" },
+    { "brand": "Iams", "unit": "5lb Bag", "price": 12.99, "category": "Pets" }
+  ],
+  "almond milk": [
+    { "brand": "Silk", "unit": "64oz", "price": 4.29, "category": "Dairy" },
+    { "brand": "Blue Diamond", "unit": "64oz", "price": 3.99, "category": "Dairy" },
+    { "brand": "Califia Farms", "unit": "48oz", "price": 5.49, "category": "Dairy" }
+  ]
+}

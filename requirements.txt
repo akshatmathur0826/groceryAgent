@@ -1,0 +1,6 @@
+Flask==3.0.3
+pytesseract==0.3.13
+Pillow==10.4.0
+langchain-google-genai
+langchain-core
+python-dotenv
