@@ -62,4 +62,4 @@ class OCRProcessor:
 if __name__ == "__main__":
     # Direct execution for testing with the specific image
     processor = OCRProcessor()
-    print(f"Extracted Items: {processor.extract_items('/Users/akshatmathur/Downloads/grocery_agent 2/IMG_0424.jpg')}")
+    print(f"Extracted Items: {processor.extract_items('/Users/akshatmathur/Downloads/GroceryAgent/IMG_0424.jpg')}")

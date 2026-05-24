@@ -20,7 +20,7 @@ class GroceryAgent:
     def __init__(self):
         self.order_history = OrderHistory()
         self.product_db = ProductDatabase()
-        self.llm = ChatGoogleGenerativeAI(model="ggemini-2.5-flash-lite", temperature=0)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
         
     AUTO_ADD_THRESHOLD = 3  # Orders needed to auto-populate basket
 

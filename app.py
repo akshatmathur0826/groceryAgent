@@ -50,7 +50,11 @@ def search():
     
     if len(multi_match) > 1:
         results = agent.resolve_list(multi_match)
-        return jsonify({"type": "multi_resolve", "results": results})
+        # Filter out results where no alternatives or suggestions were found to reduce clutter
+        valid_results = [r for r in results if r["suggested"] or r["alternatives"]]
+        if not valid_results:
+             return jsonify({"type": "not_found", "query": raw_query})
+        return jsonify({"type": "multi_resolve", "results": valid_results})
 
     # Single item logic
     query = multi_match[0]
@@ -98,7 +102,7 @@ def resolve():
 def upload():
     """Handle image upload, run OCR, and resolve all detected items."""
     # Hardcoded path for testing as per user request
-    filepath = "/Users/akshatmathur/Downloads/grocery_agent 2/IMG_0424.jpg"
+    filepath = "/Users/akshatmathur/Downloads/GroceryAgent/IMG_0424.jpg"
 
     try:
         items = ocr.extract_items(filepath)
