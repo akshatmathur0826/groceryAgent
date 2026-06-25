@@ -61,6 +61,14 @@ set_env_if_blank "FLASK_APP" "app.py"
 set_env_if_blank "FLASK_RUN_HOST" "0.0.0.0"
 set_env_if_blank "FLASK_RUN_PORT" "5000"
 
+# PostgreSQL configuration. These are local-dev defaults; a real deployment can
+# override any of them by exporting the values before running this script.
+set_env_if_blank "POSTGRES_USER" "${POSTGRES_USER:-grocery}"
+set_env_if_blank "POSTGRES_PASSWORD" "${POSTGRES_PASSWORD:-grocery}"
+set_env_if_blank "POSTGRES_DB" "${POSTGRES_DB:-grocery}"
+set_env_if_blank "DATABASE_URL" \
+  "${DATABASE_URL:-postgresql+psycopg://grocery:grocery@localhost:5432/grocery}"
+
 # Expose the Alloy runtime flag to the app if anything wants to branch on it.
 set_env_if_blank "IS_ALLOY" "${IS_ALLOY:-false}"
 
