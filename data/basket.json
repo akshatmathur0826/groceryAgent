@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "name": "eggs",
+    "brand": "Vital Farms",
+    "quantity": 1,
+    "unit": "12pk",
+    "price": 7.99
+  },
+  {
+    "name": "coffee",
+    "brand": "Starbucks",
+    "quantity": 3,
+    "unit": "12oz Bag",
+    "price": 9.99
+  }
+]
