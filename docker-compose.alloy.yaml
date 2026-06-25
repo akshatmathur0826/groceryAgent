@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16
+    # Host networking is required in this sandbox: the default Docker daemon
+    # runs without bridge networking, so containers share the host network.
+    # Postgres therefore listens on the host's 127.0.0.1:5432.
+    network_mode: host
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-grocery}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grocery}
+      POSTGRES_DB: ${POSTGRES_DB:-grocery}
+      # PGPORT is the default 5432; kept explicit for clarity.
+      PGPORT: 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-grocery} -d ${POSTGRES_DB:-grocery}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    image: python:3.11-slim
+    working_dir: /workspace
+    # Host networking is required in this sandbox (see db service note). It also
+    # lets the Flask server be reached by the Alloy preview proxy on the host.
+    network_mode: host
+    env_file:
+      - .env
+    environment:
+      IS_ALLOY: ${IS_ALLOY:-false}
+      # Bind Flask to all interfaces on the app's stable port (not 8080,
+      # which Alloy reserves for its preview proxy).
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 5000
+      # Postgres reachable on the shared host network.
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://grocery:grocery@localhost:5432/grocery}
+    volumes:
+      - .:/workspace
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -lc "pip install --no-cache-dir -r requirements.txt &&
+                python seed_db.py &&
+                flask --app app run --host=0.0.0.0 --port=5000 --debug"
+
+volumes:
+  pgdata:

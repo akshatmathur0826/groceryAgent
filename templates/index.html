@@ -42,7 +42,8 @@
                 <div class="flex gap-2">
                     <input type="text" id="query-input" list="search-suggestions" placeholder="Try 'Milk, eggs, and bread'..." 
                         class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all"
-                        oninput="handleAutocomplete(this.value)">
+                        oninput="handleAutocomplete(this.value)"
+                        onkeydown="if (event.key === 'Enter') { event.preventDefault(); handleSearch(); }">
                     <datalist id="search-suggestions"></datalist>
                     <button onclick="handleSearch()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
                         Find Items
