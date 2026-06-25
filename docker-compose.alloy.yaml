@@ -1,0 +1,22 @@
+services:
+  web:
+    image: python:3.11-slim
+    working_dir: /workspace
+    # Host networking is required in this sandbox: the default Docker daemon
+    # runs without bridge networking, so containers must share the host network
+    # to reach the internet (pip) and to expose the Flask server to the Alloy
+    # preview proxy on the host.
+    network_mode: host
+    env_file:
+      - .env
+    environment:
+      IS_ALLOY: ${IS_ALLOY:-false}
+      # Bind Flask to all interfaces on the app's stable port (not 8080,
+      # which Alloy reserves for its preview proxy).
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 5000
+    volumes:
+      - .:/workspace
+    command: >
+      bash -lc "pip install --no-cache-dir -r requirements.txt &&
+                flask --app app run --host=0.0.0.0 --port=5000"
